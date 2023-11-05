@@ -1,0 +1,107 @@
+<div class="container" id="container">
+    <div class="form-container sign-up">
+        <form>
+            <h1>Create Account</h1>
+            <input [(ngModel)]="registerRequest.FirstName" [ngModelOptions]="{standalone: true}" type="text"
+                class="form-control border border-secondary-subtle" id="firstname" placeholder="İsim">
+            <input [(ngModel)]="registerRequest.LastName" [ngModelOptions]="{standalone: true}" type="text"
+                class="form-control border border-secondary-subtle" id="lastname" placeholder="Soyisim">
+            <input [(ngModel)]="registerRequest.Age" [ngModelOptions]="{ standalone: true }" type="date"
+                class="form-control border border-secondary-subtle" id="birthdate">
+            <input [(ngModel)]="registerRequest.UserName" [ngModelOptions]="{standalone: true}" type="text"
+                class="form-control border border-secondary-subtle" id="username" placeholder="kullanıcı adı giriniz">
+            <input [(ngModel)]="registerRequest.Email" [ngModelOptions]="{standalone: true}" type="email"
+                class="form-control border border-secondary-subtle" id="email" placeholder="Email giriniz">
+            <input [(ngModel)]="registerRequest.Password" [ngModelOptions]="{standalone: true}" type="password"
+                class="form-control border border-secondary-subtle" id="password" placeholder="Şifre giriniz">
+            <label for="userType">User Type:</label>
+            <select id="userType" name="userType" [(ngModel)]="registerRequest.UserType">
+                <option [value]="userTypes.Doctor">Doctor</option>
+                <option [value]="userTypes.Secretary">Secretary</option>
+                <option [value]="userTypes.Patient">Patient</option>
+            </select>
+            <button (click)="register()" type="button">Sign Up</button>
+        </form>
+    </div>
+    <div class="form-container sign-in">
+        <form>
+            <h1>Sign In</h1>
+
+            <input [(ngModel)]="loginRequest.UserName" [ngModelOptions]="{standalone: true}" name="UserName" type="text"
+                class="fform-control border border-secondary-subtle w-75" placeholder="Kullanıcı adınızı girin">
+            <input [(ngModel)]="loginRequest.Password" [ngModelOptions]="{standalone: true}" name="Password"
+                type="password" class="fform-control border border-secondary-subtle w-75" placeholder="Şifrenizi girin">
+            <a (click)="openForgotForm()" type="button">Forget Your Password?</a>
+            <button (click)="login()" type="button">Sign In</button>
+        </form>
+    </div>
+    <div class="toggle-container">
+        <div class="toggle">
+            <div class="toggle-panel toggle-left">
+                <h1>Welcome Back!</h1>
+                <p>Enter your personal details to use all of site features</p>
+                <button class="hidden" id="login">Sign In</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Hello!</h1>
+                <p>Register with your personal details to use all of site features</p>
+                <button class="hidden" id="register">Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="forgotPw">
+    <div class="modal-dialog">
+      <h2>Şifremi Unuttum</h2>
+      <div>
+        <form *ngIf="!mailCheck&&!codeCheck">
+  
+          <div class="form-group">
+            <label style="color: black;">Email Adresiniz</label>
+            <input style="border: 1px solid gray" [(ngModel)]="mail!.recepients" [ngModelOptions]="{standalone: true}"
+              type="email" class="form-control" required>
+          </div>
+  
+          <button (click)="codeSenderMail()" class="btn btn-success">Onay Kodu
+            Al</button>
+  
+        </form>
+  
+        <form *ngIf="mailCheck">
+          <div>
+            Onay Kodunu giriniz
+          </div>
+          <div class="form-group">
+            <label> Onay Şifresi</label>
+            <input style="border: 1px solid gray" [(ngModel)]="confirmInput" [ngModelOptions]="{standalone:true}"
+              type="text" class="form-control" required>
+          </div>
+          <button (click)="confirmCodeMethod()" class="btn btn-success">Onay Kodunu
+            Onayla</button>
+        </form>
+        <form *ngIf="codeCheck">
+          <div class="form-group">
+            <label>Email</label>
+            <input style="border: 1px solid gray" [(ngModel)]="mail!.recepients" [ngModelOptions]="{standalone:true}"
+              type="text" class="form-control" required readonly>
+          </div>
+          <div>
+            Yeni Şifrenizi giriniz
+          </div>
+          <div class="form-group">
+            <label>Şifre</label>
+            <input style="border: 1px solid gray" [(ngModel)]="pw!.password" [ngModelOptions]="{standalone:true}"
+              type="password" class="form-control" required>
+          </div>
+          <button (click)="changePassword()" class="btn btn-success">Şifreyi Değiştir</button>
+        </form>
+        <br>
+  
+      </div>
+      <br>
+  
+      <button (click)="closeForgotForm()">Kapat</button>
+        
+    </div>
+  </div>

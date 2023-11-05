@@ -1,0 +1,104 @@
+<app-navbar></app-navbar>
+<div class="container" style="width: 100%; margin-left: 200px;">
+    <main id="main" class="main">
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Randevu Tarihi</th>
+            <th>Neden</th>
+            <th>Kullanıcı</th>
+            <th>Onay Durumu</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let appointment of appointments">
+            <td>{{ appointment.appointmentDate }}</td>
+            <td>{{ appointment.reason }}</td>
+            <td>{{ appointment.user?.firstName }} {{ appointment.user?.lastName }} </td>
+            <td>{{ appointment.isConfirmed ? 'Onaylandı' : 'Onay Bekliyor' }}</td>
+            <td>
+              <div class="button-group">
+                <button (click)="confirmDelete(appointment.id)" class="btn btn-danger" style="width: 8rem; margin-right: 15px;">Sil</button>
+                <button (click)="showUpdateForm(appointment)" class="btn btn-warning" style="width: 8rem;">Güncelle</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button (click)="showAddForm = true" class="btn btn-success" style="width: 8rem; margin-right: 15px;">Randevu Ekle</button>
+  
+      <!-- Yeni randevu ekleme formu (başlangıçta gizli) -->
+      <div *ngIf="showAddForm">
+        <h2 style="margin-top: 15px;">Yeni Randevu Ekle</h2>
+        <form>
+          <div class="form-group">
+            <label for="appointmentDate" style="color: gray;">Randevu Tarihi</label>
+            <input type="datetime-local" class="form-control" id="appointmentDate" name="appointmentDate" [(ngModel)]="newAppointment.appointmentDate">
+          </div>
+          <div class="form-group">
+            <label for="reason" style="color: gray; margin-top: 10px;">Neden</label>
+            <input type="text" class="form-control" id="reason" name="reason" [(ngModel)]="newAppointment.reason">
+          </div>
+          <div class="form-group">
+            <label for="user" style="color: gray; margin-top: 10px;">Kullanıcı Seçimi</label>
+            <select id="user" style="border: 1px solid gray;" [(ngModel)]="newAppointment.userID" [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let user of users" [value]="user.id">{{ user.userName }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="isConfirmed" style="color: gray; margin-top: 10px;">Onay Durumu</label>
+            <select id="isConfirmed" style="border: 1px solid gray;" [(ngModel)]="newAppointment.isConfirmed" [ngModelOptions]="{standalone: true}">
+              <option [value]="true">Onaylandı</option>
+              <option [value]="false">Onay Bekliyor</option>
+            </select>
+          </div>
+          <!-- Diğer alanları ekleyebilirsiniz -->
+          <div style="margin-top: 15px; width: 100%; text-align: center; display: flex; flex-direction: column; align-items: center;" *ngIf="currentUser?.userType===0 ||currentUser?.userType===1">
+            <div style="width: 50%;">
+              <button type="button" (click)="cancelAdd()" class="btn btn-secondary" style="width: 100%;">İptal</button>
+            </div>
+            <div style="width: 50%; margin-top: 10px;">
+              <button type="button" (click)="addAppointment()" class="btn btn-primary" style="width: 100%;">Kaydet</button>
+            </div>
+          </div>
+        </form>
+      </div>
+  
+      <div *ngIf="selectedAppointment">
+        <h2 style="margin-top: 15px;">Randevu Güncelle</h2>
+        <form>
+          <!-- Güncelleme için gerekli input alanları burada olmalı -->
+          <div class="form-group">
+            <label for="updatedAppointmentDate" style="color: gray; margin-top: 10px;">Randevu Tarihi</label>
+            <input type="text" class="form-control" id="updatedAppointmentDate" name="updatedAppointmentDate" [(ngModel)]="selectedAppointment.appointmentDate">
+          </div>
+          <div class="form-group">
+            <label for="updatedReason" style="color: gray; margin-top: 10px;">Neden</label>
+            <input type="text" class="form-control" id="updatedReason" name="updatedReason" [(ngModel)]="selectedAppointment.reason">
+          </div>
+          <div class="form-group">
+            <label for="updatedUser" style="color: gray; margin-top: 10px;">Kullanıcı</label>
+            <input type="number" class="form-control" id="updatedUser" name="updatedUser" [(ngModel)]="selectedAppointment.userID">
+          </div>
+          <div class="form-group">
+            <label for="updatedIsConfirmed" style="color: gray; margin-top: 10px;">Onay Durumu</label>
+            <select id="updatedIsConfirmed" style="border: 1px solid gray;" [(ngModel)]="selectedAppointment.isConfirmed" [ngModelOptions]="{standalone: true}">
+              <option [value]="true">Onaylandı</option>
+              <option [value]="false">Onay Bekliyor</option>
+            </select>
+          </div>
+          <!-- Diğer güncelleme alanlarını burada ekleyin -->
+          <div style="margin-top: 15px; width: 100%; text-align: center; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 50%;">
+              <button type="button" (click)="cancelUpdate()" class="btn btn-secondary" style="width: 100%;">İptal</button>
+            </div>
+            <div style="width: 50%; margin-top: 10px;">
+              <button type="button" (click)="updateAppointment()" class="btn btn-primary" style="width: 100%;">Kaydet</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  

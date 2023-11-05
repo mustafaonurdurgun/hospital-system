@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+
+<div class="container" style="width: 100%; margin-left: 200px;">
+    <main id="main" class="main">
+        <h1>Tüm Kullanıcılar</h1>
+
+        <!-- Kullanıcılar Tablosu -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ad</th>
+                    <th>Soyad</th>
+                    <th>Email</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Kullanıcı Türü</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.userName }}</td>
+                    <td>
+                        <ng-container *ngIf="user.userType === 0">
+                            Admin
+                        </ng-container>
+                        <ng-container *ngIf="user.userType === 1" ;>
+                            Doctor
+                        </ng-container>
+                        <ng-container *ngIf="user.userType === 2">
+                            Secretary
+                        </ng-container>
+                        <ng-container *ngIf="user.userType === 3;">
+                            Patient
+                        </ng-container>
+                        <ng-template #userTypeUser>
+                            Kullanıcı
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+

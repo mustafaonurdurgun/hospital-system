@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+    <div class="container-fluid">
+        <div class="logo" style="margin-top: 10px;">
+
+        </div>
+        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2" routerLink="/randevular">Randevular</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" routerLink="/anasayfa">Anasayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" routerLink="/kullanıcılar">Kullanıcılar</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link mx-2" routerLink="/receteler">Reçeteler</a>
+                </li>
+
+                <li *ngIf="isLoggedIn" class="nav-item">
+                    <a class="nav-link mx-2" (click)="logOut()" routerLink="/anasayfa">Çıkış Yap</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
